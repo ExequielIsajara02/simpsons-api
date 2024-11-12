@@ -21,7 +21,7 @@ public class CharacterServiceImpl implements CharacterService {
 
     @Override
     public Optional<Character> getCharacter(int id) {
-        return Optional.empty();
+        return characterRepository.findById(id);
     }
 
     @Override
@@ -32,6 +32,6 @@ public class CharacterServiceImpl implements CharacterService {
 
     @Override
     public void deleteCharacter(int id) {
-
+        characterRepository.deleteById(id);
     }
 }
