@@ -1,0 +1,23 @@
+Data base connection
+
+----- Back -----
+
+1- Create Layers
+
+2- Entity
+
+3- Character repository
+
+4- Character Service interface and implement
+
+5- Controllers
+
+----- Front -----
+
+1- Create react Project
+
+2- Display all characters
+
+3- Display one character
+
+

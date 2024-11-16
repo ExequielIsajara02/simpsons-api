@@ -12,14 +12,16 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/characters")
+@CrossOrigin(value = "*")
 public class CharacterController {
 
     @Autowired
     private CharacterService characterService;
 
     @GetMapping()
-    public List<Character> getAllCharacters() {
-        return characterService.getAllCharacters();
+    public ResponseEntity<List<Character>> getAllCharacters() {
+        List<Character> characters = characterService.getAllCharacters();
+        return ResponseEntity.ok(characters);
     }
 
     @GetMapping("/{id}")
@@ -32,8 +34,20 @@ public class CharacterController {
     }
 
     @PostMapping()
-    public Character saveCharacter(@RequestBody Character character) {
-        return characterService.saveCharacter(character);
+    public ResponseEntity<Void> saveCharacter(@RequestBody Character character) {
+        characterService.saveCharacter(character);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCharacter(@PathVariable Integer id, @RequestBody Character characterUpdated) {
+        Optional<Character> character = characterService.getCharacter(id);
+        if(!character.isPresent()){
+            return ResponseEntity.notFound().build();
+        }
+        characterUpdated.setId_character(character.get().getId_character());
+        characterService.saveCharacter(characterUpdated);
+        return ResponseEntity.ok(characterUpdated);
     }
 
     @DeleteMapping("/{id}")
