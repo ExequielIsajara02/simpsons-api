@@ -33,6 +33,18 @@ public class CharacterController {
         return ResponseEntity.ok(character);
     }
 
+    @GetMapping("/total/{number}")
+    public ResponseEntity<?> getMultipleCharacters(@PathVariable Integer number) {
+        List<Character> charactersListSize = characterService.getAllCharacters();
+
+        if(number <= 0 || number > charactersListSize.size()){
+            return ResponseEntity.internalServerError().build();
+        }
+        List<Character> characters = characterService.getMultipleCharacters(number);
+        return ResponseEntity.ok(characters);
+    }
+
+
     @PostMapping()
     public ResponseEntity<Void> saveCharacter(@RequestBody Character character) {
         characterService.saveCharacter(character);
